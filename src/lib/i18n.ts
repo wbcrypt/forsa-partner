@@ -64,7 +64,7 @@ const T: Record<Locale, Record<string, string>> = {
     commPending:'En attente', commApproved:'Approuvées', commPaid:'Payées',
     commHistory:'Historique', amount:'Montant', paymentDate:'Date de paiement',
     noComm:'Pas encore de commissions',
-    noCommDesc:"Les commissions sont générées lors de l'approbation des étudiants.',
+    noCommDesc:"Les commissions sont générées lors de l'approbation des étudiants.",
     totalEarned:'Total gagné', totalPending:'Total en attente',
     exportCSV:'Exporter CSV', exportPDF:'Exporter PDF',
     monthlyReport:'Résumé mensuel', convRate:'Taux de conversion',

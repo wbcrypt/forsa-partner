@@ -67,7 +67,7 @@ export default function ReportsPage() {
       parseFloat(a.tuition_amount || '0').toFixed(2),
       a.lead_date ? format(new Date(a.lead_date), 'yyyy-MM-dd') : '',
     ])
-    const csv = [headers.join(','), ...rows.map((r: string[]) => r.map(v => `"${v}"`).join(',"))].join('\n")
+    const csv = [headers.join(','), ...rows.map((r: string[]) => r.map(v => `"${v}"`).join(','))].join('\n')
     const blob = new Blob([csv], { type: 'text/csv' })
     const url = URL.createObjectURL(blob)
     const a = document.createElement('a')
