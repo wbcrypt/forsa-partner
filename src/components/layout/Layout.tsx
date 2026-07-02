@@ -24,9 +24,7 @@ export default function Layout() {
       <header className="sticky top-0 z-30 bg-white border-b border-gray-100">
         <div className="max-w-2xl mx-auto px-4 h-14 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
-            <div className="w-7 h-7 bg-teal-500 rounded-lg flex items-center justify-center flex-shrink-0">
-              <span className="text-white font-bold text-sm">F</span>
-            </div>
+            <img src="/logo.png" alt="FORSA" className="w-7 h-7 flex-shrink-0 object-contain" />
             <div>
               <span className="font-semibold text-navy-900 text-sm">FORSA</span>
               {partner?.isFoundingPartner && (
