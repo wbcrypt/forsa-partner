@@ -1,7 +1,8 @@
 import axios from 'axios'
 
 const TENANT_ID = 'be694fc0-789a-4dec-b514-850710469c72'
-const api = axios.create({ baseURL: (import.meta.env.VITE_API_URL || '') + '/api/v1', headers: { 'Content-Type': 'application/json' } })
+const BASE_URL = (import.meta.env.VITE_API_URL || '') + '/api/v1'
+const api = axios.create({ baseURL: BASE_URL, headers: { 'Content-Type': 'application/json' } })
 
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem('partner_token')
@@ -21,7 +22,18 @@ api.interceptors.response.use(r => r, async (error) => {
     const refresh = localStorage.getItem('partner_refresh')
     if (!refresh) { localStorage.clear(); window.location.href = '/login'; return Promise.reject(error) }
     try {
-      const res = await axios.post('/api/v1/auth/refresh', { refreshToken: refresh })
+      // T-109/K-47 — was `axios.post('/api/v1/auth/refresh', ...)`: bare
+      // `axios` has no configured baseURL, so this resolved as a relative
+      // path against whatever origin the app happened to be running on
+      // (with a redundant '/api/v1' prefix on top of that — the same
+      // double-prefix class of bug as T-104), only working by coincidence
+      // when frontend and API share an origin. Fixed to use the correct
+      // full URL. Deliberately still a bare `axios` call, not `api.post` —
+      // `api` has this exact response interceptor attached, so routing the
+      // refresh call through it risks infinite recursion if the refresh
+      // token itself is invalid/expired (a fresh 401 on the refresh call
+      // would re-enter this same interceptor).
+      const res = await axios.post(`${BASE_URL}/auth/refresh`, { refreshToken: refresh })
       const { accessToken, refreshToken: nr } = res.data
       localStorage.setItem('partner_token', accessToken)
       localStorage.setItem('partner_refresh', nr)
