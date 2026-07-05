@@ -48,6 +48,10 @@ export const authApi = {
 export const partnerApi = {
   list: (params?: any) => api.get('/partners', { params }),
   get: (id: string) => api.get(`/partners/${id}`),
+  // T-103 — resolves the caller's own partner record server-side from the
+  // JWT identity (partners.user_id), never from a client-supplied id or a
+  // list index. Real, working backend endpoint (forsa-os commit ca6cf80d).
+  me: () => api.get('/partners/me'),
   update: (id: string, data: any) => api.patch ? api.patch(`/partners/${id}`, data) : api.post(`/partners/${id}`, data),
   getDashboard: (id: string) => api.get(`/partners/${id}/dashboard`),
   getCommissions: () => api.get('/partners/commissions'),

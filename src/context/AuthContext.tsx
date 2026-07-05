@@ -27,23 +27,20 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [partner, setPartner] = useState<Partner | null>(null)
   const [loading, setLoading] = useState(true)
 
-  const loadPartner = useCallback(async (userId: string) => {
+  // T-103 — was: fall back to listing ALL partners and taking partners[0]
+  // as "this user's partner" whenever no partner_id was cached yet (e.g. a
+  // brand-new partner's very first login). That could attach a partner to
+  // an arbitrary, unrelated partner's data — the single highest-severity
+  // frontend bug found across the platform (see
+  // forsa-os/implementation/KNOWN_ISSUES.md K-03). Now resolves the
+  // caller's own partner record entirely server-side via GET /partners/me,
+  // which looks it up from the JWT identity (partners.user_id) — there is
+  // no client-supplied id or list index involved at all anymore.
+  const loadPartner = useCallback(async () => {
     try {
-      // Find the partner associated with this user
-      const savedPartnerId = localStorage.getItem('partner_id')
-      if (savedPartnerId) {
-        const res = await partnerApi.get(savedPartnerId)
-        setPartner(res.data)
-      } else {
-        // Try to find by listing and matching
-        const res = await partnerApi.list({ limit: 100 })
-        const partners = res.data?.data || []
-        if (partners.length > 0) {
-          setPartner(partners[0])
-          localStorage.setItem('partner_id', partners[0].id)
-        }
-      }
-    } catch { /* partner not found */ }
+      const res = await partnerApi.me()
+      setPartner(res.data)
+    } catch { /* no partner account linked to this user yet */ }
   }, [])
 
   useEffect(() => {
@@ -52,7 +49,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       authApi.me()
         .then(async r => {
           setUser(r.data)
-          await loadPartner(r.data.id)
+          await loadPartner()
         })
         .catch(() => localStorage.clear())
         .finally(() => setLoading(false))
@@ -65,7 +62,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     localStorage.setItem('partner_refresh', res.data.refreshToken)
     const me = await authApi.me()
     setUser(me.data)
-    await loadPartner(me.data.id)
+    await loadPartner()
   }, [loadPartner])
 
   const logout = useCallback(() => {
@@ -76,7 +73,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, [])
 
   const refreshPartner = useCallback(() => {
-    if (user) loadPartner(user.id)
+    if (user) loadPartner()
   }, [user, loadPartner])
 
   return (
