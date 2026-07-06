@@ -118,7 +118,7 @@ ${apps.map((a: any, i: number) => `<tr>
 <td>${a.lead_date ? format(new Date(a.lead_date), 'dd MMM yyyy') : '—'}</td>
 </tr>`).join('')}
 </tbody></table>
-<p class="footer">Confidential · FORSA Educational Financing · forsa.tn</p>
+<p class="footer">Confidential · FORSA Digital Educational Ecosystem · forsa.tn</p>
 </body></html>`
     const w = window.open('', '_blank')
     if (w) { w.document.write(html); w.document.close(); setTimeout(() => w.print(), 600) }
