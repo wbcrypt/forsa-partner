@@ -23,7 +23,7 @@ const T: Record<Locale, Record<string, string>> = {
     qrCode:'QR Code', scanToApply:'Students scan to apply with FORSA',
     howItWorks:'How It Works',
     step1:'Share your unique link or code with students',
-    step2:'Students apply for financing through FORSA',
+    step2:'Students apply through FORSA',
     step3:'FORSA reviews and approves the application',
     step4:'You earn your referral commission',
     commPending:'Pending', commApproved:'Approved', commPaid:'Paid',

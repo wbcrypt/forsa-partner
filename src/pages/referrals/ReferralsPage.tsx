@@ -48,7 +48,7 @@ export default function ReferralsPage() {
   }
 
   const shareWhatsApp = () => {
-    const msg = `Apply for FORSA educational financing with my referral link: ${referralLink}`
+    const msg = `Apply for a FORSA tuition facilitation plan with my referral link: ${referralLink}`
     window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank')
   }
 
@@ -89,7 +89,7 @@ export default function ReferralsPage() {
           </button>
           <button onClick={() => {
               if (navigator.share) {
-                navigator.share({ title: 'Apply with FORSA', text: 'Apply for financing', url: referralLink })
+                navigator.share({ title: 'Apply with FORSA', text: 'Apply for a tuition facilitation plan', url: referralLink })
               } else copy(referralLink, setCopiedLink)
             }}
             className="flex items-center justify-center gap-2 px-4 py-2.5 bg-gray-100 text-gray-700 text-sm font-medium rounded-xl hover:bg-gray-200 transition-colors active:scale-95">
