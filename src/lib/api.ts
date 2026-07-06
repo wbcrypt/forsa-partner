@@ -64,11 +64,29 @@ export const partnerApi = {
   // JWT identity (partners.user_id), never from a client-supplied id or a
   // list index. Real, working backend endpoint (forsa-os commit ca6cf80d).
   me: () => api.get('/partners/me'),
-  update: (id: string, data: any) => api.patch ? api.patch(`/partners/${id}`, data) : api.post(`/partners/${id}`, data),
-  getDashboard: (id: string) => api.get(`/partners/${id}/dashboard`),
-  getCommissions: () => api.get('/partners/commissions'),
+  // T-224 discovery — PATCH /partners/:id never existed (this always
+  // 404'd, or fell back to POST which also has no matching route).
+  // Self-scoped PATCH /partners/me updates only the caller's own record.
+  update: (_id: string, data: { name?: string; website?: string }) => api.patch('/partners/me', data),
+  // T-224 discovery — GET /partners/:id/dashboard requires the staff-only
+  // partner.view permission, which no partner-portal account holds —
+  // this 403'd unconditionally. Self-scoped GET /partners/me/dashboard
+  // resolves the caller's own partner id server-side instead.
+  getDashboard: (_id: string) => api.get('/partners/me/dashboard'),
+  // T-224 discovery — GET /partners/commissions required the staff-only
+  // partner.commission.approve permission (403 for any real partner
+  // account) and, independent of that, never filtered by partner_id at
+  // all — every partner's commissions across the tenant would have
+  // leaked to any partner able to call it. Self-scoped and filtered.
+  getCommissions: () => api.get('/partners/me/commissions'),
 }
 
 export const applicationsApi = {
-  list: (params?: any) => api.get('/applications', { params }),
+  // T-224 discovery — this called GET /applications?partnerId=X, a
+  // staff-only route whose recognized filters never included partnerId
+  // at all (silently ignored) — either a 403 (no partner-portal account
+  // holds application.view) or, if ever granted, every application
+  // across the entire tenant leaking to any partner. Self-scoped
+  // endpoint resolves the partner server-side via the JWT identity.
+  list: (params?: any) => api.get('/partners/me/applications', { params }),
 }
