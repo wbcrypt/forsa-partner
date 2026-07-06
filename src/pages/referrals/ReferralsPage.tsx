@@ -8,7 +8,7 @@ import { Copy, Check, ExternalLink, Smartphone, Share2, HelpCircle } from 'lucid
 // In production you'd use a QR library; here we render a stylized code
 function QRDisplay({ value, size = 160 }: { value: string; size?: number }) {
   // Use Google Charts API to generate real QR
-  const url = `https://api.qrserver.com/v1/create-qr-code/?size=${size}x${size}&data=${encodeURIComponent(value)}&color=1B2A5E&bgcolor=f0f4ff`
+  const url = `https://api.qrserver.com/v1/create-qr-code/?size=${size}x${size}&data=${encodeURIComponent(value)}&color=1B3A8C&bgcolor=EEF2FC`
   return (
     <div className="inline-flex items-center justify-center p-4 bg-navy-50 rounded-2xl">
       <img src={url} alt="QR Code" width={size} height={size} className="rounded-xl"
@@ -18,7 +18,7 @@ function QRDisplay({ value, size = 160 }: { value: string; size?: number }) {
           target.style.display = 'none'
           const parent = target.parentElement
           if (parent) {
-            parent.innerHTML = `<div style="width:${size}px;height:${size}px;display:flex;align-items:center;justify-content:center;background:#f0f4ff;border-radius:12px;font-size:11px;color:#1B2A5E;text-align:center;padding:12px">QR Code<br/>(Requires internet)</div>`
+            parent.innerHTML = `<div style="width:${size}px;height:${size}px;display:flex;align-items:center;justify-content:center;background:#EEF2FC;border-radius:12px;font-size:11px;color:#1B3A8C;text-align:center;padding:12px">QR Code<br/>(Requires internet)</div>`
           }
         }} />
     </div>
@@ -126,7 +126,7 @@ export default function ReferralsPage() {
           </p>
           <button onClick={() => {
             const link = document.createElement('a')
-            link.href = `https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=${encodeURIComponent(referralLink)}&color=1B2A5E`
+            link.href = `https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=${encodeURIComponent(referralLink)}&color=1B3A8C`
             link.download = `forsa-qr-${referralCode}.png`
             link.click()
           }} className="btn-secondary text-xs py-2">

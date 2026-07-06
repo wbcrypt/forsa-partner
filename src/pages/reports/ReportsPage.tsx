@@ -83,14 +83,14 @@ export default function ReportsPage() {
 <html><head><title>FORSA Partner Report</title>
 <style>
 body{font-family:Arial,sans-serif;font-size:12px;padding:24px;color:#222}
-h1{color:#1B2A5E;font-size:20px;margin-bottom:4px}
+h1{color:#1B3A8C;font-size:20px;margin-bottom:4px}
 .meta{color:#888;font-size:11px;margin-bottom:20px}
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}
-.stat{background:#f0f4ff;border-radius:12px;padding:12px}
-.stat-val{font-size:22px;font-weight:700;color:#1B2A5E}
+.stat{background:#EEF2FC;border-radius:12px;padding:12px}
+.stat-val{font-size:22px;font-weight:700;color:#1B3A8C}
 .stat-label{font-size:10px;color:#666;margin-top:2px}
 table{width:100%;border-collapse:collapse}
-th{background:#1B2A5E;color:#fff;padding:8px 10px;text-align:left;font-size:11px}
+th{background:#1B3A8C;color:#fff;padding:8px 10px;text-align:left;font-size:11px}
 td{padding:7px 10px;border-bottom:1px solid #eee;font-size:11px}
 tr:nth-child(even) td{background:#f9f9f9}
 .footer{margin-top:20px;color:#ccc;font-size:10px;text-align:center}
