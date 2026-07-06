@@ -19,7 +19,7 @@ export default function DashboardPage() {
 
   const { data: appsData } = useQuery({
     queryKey: ['partner-apps', partner?.id],
-    queryFn: () => applicationsApi.list({ partnerId: partner!.id, limit: 5 }).then(r => r.data),
+    queryFn: () => applicationsApi.list({ limit: 5 }).then(r => r.data),
     enabled: !!partner?.id,
   })
 

@@ -12,7 +12,11 @@ export default function ReportsPage() {
 
   const { data: appsData, isLoading } = useQuery({
     queryKey: ['partner-all-apps', partner?.id],
-    queryFn: () => applicationsApi.list({ partnerId: partner!.id, limit: 200 }).then(r => r.data),
+    // Phase 3 (browser E2E testing) discovery — requested limit=200,
+    // exceeding PaginationDto's @Max(100) — this 400'd unconditionally,
+    // even before the self-scoping fix (a separate, pre-existing bug).
+    // Capped to the actual server-side max.
+    queryFn: () => applicationsApi.list({ limit: 100 }).then(r => r.data),
     enabled: !!partner?.id,
   })
 
