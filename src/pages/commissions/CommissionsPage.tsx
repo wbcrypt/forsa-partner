@@ -23,8 +23,8 @@ export default function CommissionsPage() {
   const approved = all.filter((c: any) => c.status === 'approved')
   const paid = all.filter((c: any) => c.status === 'paid')
 
-  const totalPaid = paid.reduce((s: number, c: any) => s + parseFloat(c.amount || '0'), 0)
-  const totalPending = [...pending, ...approved].reduce((s: number, c: any) => s + parseFloat(c.amount || '0'), 0)
+  const totalPaid = paid.reduce((s: number, c: any) => s + parseFloat(c.partner_share || '0'), 0)
+  const totalPending = [...pending, ...approved].reduce((s: number, c: any) => s + parseFloat(c.partner_share || '0'), 0)
 
   const displayList = tab === 'all' ? all : tab === 'pending' ? [...pending, ...approved] : paid
 
@@ -72,7 +72,7 @@ export default function CommissionsPage() {
 }
 
 function CommissionRow({ commission: c }: { commission: any }) {
-  const amount = parseFloat(c.amount || '0')
+  const amount = parseFloat(c.partner_share || '0')
   const isPaid = c.status === 'paid'
 
   return (
