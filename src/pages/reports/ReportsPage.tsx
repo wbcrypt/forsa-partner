@@ -37,15 +37,15 @@ export default function ReportsPage() {
   )
   const thisMonthComm = commissions
     .filter((c: any) => c.created_at && isAfter(new Date(c.created_at), monthStart))
-    .reduce((s: number, c: any) => s + parseFloat(c.amount || '0'), 0)
+    .reduce((s: number, c: any) => s + parseFloat(c.partner_share || '0'), 0)
 
   // All-time
   const totalApproved = apps.filter((a: any) =>
     ['approved_level1','approved_level2','approved_level3','active_student','completed'].includes(a.current_status)
   ).length
   const convRate = apps.length > 0 ? Math.round((totalApproved / apps.length) * 100) : 0
-  const totalComm = commissions.reduce((s: number, c: any) => s + parseFloat(c.amount || '0'), 0)
-  const paidComm = commissions.filter((c: any) => c.status === 'paid').reduce((s: number, c: any) => s + parseFloat(c.amount || '0'), 0)
+  const totalComm = commissions.reduce((s: number, c: any) => s + parseFloat(c.partner_share || '0'), 0)
+  const paidComm = commissions.filter((c: any) => c.status === 'paid').reduce((s: number, c: any) => s + parseFloat(c.partner_share || '0'), 0)
 
   // By university breakdown
   const byUni: Record<string, { count: number; approved: number }> = {}

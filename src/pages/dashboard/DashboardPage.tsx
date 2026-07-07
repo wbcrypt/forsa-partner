@@ -41,8 +41,8 @@ export default function DashboardPage() {
     ['new_lead','under_review','waiting_for_documents'].includes(a.current_status)
   ).length || 0
   const rejectedCount = dashboard?.rejected || recentApps.filter((a: any) => a.current_status === 'rejected').length || 0
-  const paidComm = commissions.filter((c: any) => c.status === 'paid').reduce((s: number, c: any) => s + parseFloat(c.amount || '0'), 0)
-  const pendingComm = commissions.filter((c: any) => c.status !== 'paid').reduce((s: number, c: any) => s + parseFloat(c.amount || '0'), 0)
+  const paidComm = commissions.filter((c: any) => c.status === 'paid').reduce((s: number, c: any) => s + parseFloat(c.partner_share || '0'), 0)
+  const pendingComm = commissions.filter((c: any) => c.status !== 'paid').reduce((s: number, c: any) => s + parseFloat(c.partner_share || '0'), 0)
   const convRate = totalReferrals > 0 ? Math.round((approvedCount / totalReferrals) * 100) : 0
 
   if (!partner) return (
