@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const TENANT_ID = 'be694fc0-789a-4dec-b514-850710469c72'
+const TENANT_ID = import.meta.env.VITE_TENANT_ID || 'be694fc0-789a-4dec-b514-850710469c72'
 const BASE_URL = (import.meta.env.VITE_API_URL || '') + '/api/v1'
 const api = axios.create({ baseURL: BASE_URL, headers: { 'Content-Type': 'application/json' } })
 
