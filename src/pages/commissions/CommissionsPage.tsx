@@ -39,15 +39,15 @@ export default function CommissionsPage() {
       <div className="grid grid-cols-2 gap-3">
         <StatCard label={t('paidComm')} value={`${totalPaid.toLocaleString()} TND`} icon={TrendingUp} color="green" />
         <StatCard label={t('estimatedComm')} value={`${totalPending.toLocaleString()} TND`} icon={Clock} color="amber" />
-        <StatCard label="Total Records" value={all.length} icon={DollarSign} color="navy" />
-        <StatCard label="Paid Records" value={paid.length} icon={CheckCircle} color="teal" />
+        <StatCard label={t('totalRecords')} value={all.length} icon={DollarSign} color="navy" />
+        <StatCard label={t('paidRecords')} value={paid.length} icon={CheckCircle} color="teal" />
       </div>
 
       {/* Commission list */}
       <Card padding={false}>
         <Tabs
           tabs={[
-            { id: 'all', label: 'All', count: all.length },
+            { id: 'all', label: t('allLabel'), count: all.length },
             { id: 'pending', label: t('commPending'), count: pending.length + approved.length },
             { id: 'paid', label: t('commPaid'), count: paid.length },
           ]}
@@ -72,6 +72,7 @@ export default function CommissionsPage() {
 }
 
 function CommissionRow({ commission: c }: { commission: any }) {
+  const { t } = useLocale()
   const amount = parseFloat(c.partner_share || '0')
   const isPaid = c.status === 'paid'
 
@@ -96,7 +97,7 @@ function CommissionRow({ commission: c }: { commission: any }) {
           </p>
         </div>
         <div className="flex items-center gap-2 mt-1">
-          <Badge status={c.status} label={c.status === 'pending' ? 'Pending' : c.status === 'approved' ? 'Approved' : 'Paid'} />
+          <Badge status={c.status} label={c.status === 'pending' ? t('commPending') : c.status === 'approved' ? t('commApproved') : t('commPaid')} />
           {c.created_at && (
             <span className="text-xs text-gray-400">
               {format(new Date(c.created_at), 'dd MMM yyyy')}
@@ -104,7 +105,7 @@ function CommissionRow({ commission: c }: { commission: any }) {
           )}
           {isPaid && c.paid_at && (
             <span className="text-xs text-green-600 font-medium">
-              Paid {format(new Date(c.paid_at), 'dd MMM yyyy')}
+              {t('paidOn')} {format(new Date(c.paid_at), 'dd MMM yyyy')}
             </span>
           )}
         </div>

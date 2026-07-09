@@ -143,7 +143,7 @@ export default function ProfilePage() {
             <button key={l.code} onClick={() => changeLocale(l.code as Locale)}
               className={clsx('py-3 rounded-xl border text-sm font-medium transition-all text-center',
                 locale === l.code ? 'border-navy-800 bg-navy-800 text-white' : 'border-gray-200 text-gray-600 hover:border-gray-300')}>
-              {l.label === 'ع' ? '🇹🇳 العربية' : l.label === 'EN' ? '🇬🇧 English' : '🇫🇷 Français'}
+              {l.code === 'ar' ? '🇹🇳 العربية' : l.code === 'en' ? '🇬🇧 English' : '🇫🇷 Français'}
             </button>
           ))}
         </div>

@@ -1,8 +1,12 @@
 export type Locale = 'en' | 'fr' | 'ar'
+// QA-12 fix — a lone Arabic letter ('ع') rendered next to 2-letter Latin
+// codes ('EN'/'FR') in the header switcher read as a truncated/broken
+// button, not a deliberate abbreviation. 'AR' matches the same
+// short-code convention as the other two.
 export const LOCALES = [
   { code: 'en' as Locale, label: 'EN', dir: 'ltr' as const },
   { code: 'fr' as Locale, label: 'FR', dir: 'ltr' as const },
-  { code: 'ar' as Locale, label: 'ع', dir: 'rtl' as const },
+  { code: 'ar' as Locale, label: 'AR', dir: 'rtl' as const },
 ]
 const T: Record<Locale, Record<string, string>> = {
   en: {
@@ -30,6 +34,7 @@ const T: Record<Locale, Record<string, string>> = {
     commHistory:'Commission History', amount:'Amount', paymentDate:'Payment Date',
     noComm:'No commissions yet',
     noCommDesc:'Commissions are generated when referred students are approved by FORSA.',
+    totalRecords:'Total Records', paidRecords:'Paid Records', allLabel:'All', paidOn:'Paid',
     totalEarned:'Total Earned', totalPending:'Total Pending',
     exportCSV:'Export CSV', exportPDF:'Export PDF',
     monthlyReport:'Monthly Summary', convRate:'Conversion Rate',
@@ -65,6 +70,7 @@ const T: Record<Locale, Record<string, string>> = {
     commHistory:'Historique', amount:'Montant', paymentDate:'Date de paiement',
     noComm:'Pas encore de commissions',
     noCommDesc:"Les commissions sont générées lors de l'approbation des étudiants.",
+    totalRecords:'Total des dossiers', paidRecords:'Dossiers payés', allLabel:'Tous', paidOn:'Payée le',
     totalEarned:'Total gagné', totalPending:'Total en attente',
     exportCSV:'Exporter CSV', exportPDF:'Exporter PDF',
     monthlyReport:'Résumé mensuel', convRate:'Taux de conversion',
@@ -100,6 +106,7 @@ const T: Record<Locale, Record<string, string>> = {
     commHistory:'سجل العمولات', amount:'المبلغ', paymentDate:'تاريخ الدفع',
     noComm:'لا توجد عمولات بعد',
     noCommDesc:'تُنشأ العمولات عند اعتماد الطلاب.',
+    totalRecords:'إجمالي السجلات', paidRecords:'السجلات المدفوعة', allLabel:'الكل', paidOn:'دُفعت في',
     totalEarned:'إجمالي المكتسب', totalPending:'إجمالي المعلق',
     exportCSV:'تصدير CSV', exportPDF:'تصدير PDF',
     monthlyReport:'الملخص الشهري', convRate:'معدل التحويل',
